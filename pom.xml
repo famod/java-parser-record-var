@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>javaparser.bug</groupId>
+    <artifactId>record-var</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>16</maven.compiler.release>
+
+        <!-- Plugin versions -->
+        <version.maven-clean-plugin>3.1.0</version.maven-clean-plugin>
+        <version.maven-resources-plugin>3.2.0</version.maven-resources-plugin>
+        <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
+        <version.maven-surefire-plugin>3.0.0-M5</version.maven-surefire-plugin>
+        <version.maven-javadoc-plugin>3.2.0</version.maven-javadoc-plugin>
+        <version.maven-jar-plugin>3.2.0</version.maven-jar-plugin>
+        <version.maven-site-plugin>3.9.1</version.maven-site-plugin>
+        <version.maven-install-plugin>3.0.0-M1</version.maven-install-plugin>
+    </properties>
+
+    <build>
+        <defaultGoal>clean install</defaultGoal>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${version.maven-clean-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${version.maven-resources-plugin}</version>
+                    <configuration>
+                        <nonFilteredFileExtensions>
+                            <nonFilteredFileExtension>zip</nonFilteredFileExtension>
+                        </nonFilteredFileExtensions>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${version.maven-compiler-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${version.maven-surefire-plugin}</version>
+                    <configuration>
+                        <trimStackTrace>false</trimStackTrace> <!-- https://issues.apache.org/jira/browse/SUREFIRE-1457 -->
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${version.maven-javadoc-plugin}</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${version.maven-site-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${version.maven-jar-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${version.maven-install-plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>net.revelc.code</groupId>
+                <artifactId>impsort-maven-plugin</artifactId>
+                <version>1.6.1</version>
+                <configuration>
+                    <groups>java.,javax.,org.,com.</groups>
+                    <staticGroups>*</staticGroups>
+                    <removeUnused>true</removeUnused>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>sort-imports</id>
+                        <goals>
+                            <goal>sort</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
